@@ -1,6 +1,7 @@
 import { inject, injectable } from "tsyringe";
 
-import { IUserRepository } from "../../repositories/IUsersRepository";
+import { IUserRepository } from "@modules/accounts/repositories/IUsersRepository";
+import { AppError } from "@shared/errors/AppError";
 
 interface IRequest {
   email: string;
@@ -26,7 +27,7 @@ class AuthenticateUserUseCase {
     const user = await this.usersRepository.findByEmail(email);
 
     if (!user) {
-      throw new Error("Email or password incorrect");
+      throw new AppError("Email or password incorrect");
     }
     // Senha correta
     const passwordMatch = await this.usersRepository.comparePassword(
@@ -35,7 +36,7 @@ class AuthenticateUserUseCase {
     );
 
     if (!passwordMatch) {
-      throw new Error("Email or password incorrect");
+      throw new AppError("Email or password incorrect");
     }
     // Gerar token
 
