@@ -22,7 +22,7 @@ describe("Create Category Controller", () => {
     values('${id}','admin','admin@admin.com.br','${password}',true,'now()','XXXXXX')
     `
     );
-  });
+  }, 60000);
 
   afterAll(async () => {
     await connection.dropDatabase();
@@ -48,7 +48,7 @@ describe("Create Category Controller", () => {
       });
 
     expect(response.status).toBe(201);
-  });
+  }, 60000);
 
   it("should not be able to create a new category with name already exists", async () => {
     const responseToken = await request(app).post("/sessions").send({
@@ -69,5 +69,5 @@ describe("Create Category Controller", () => {
       });
 
     expect(response.status).toBe(400);
-  });
+  }, 60000);
 });
